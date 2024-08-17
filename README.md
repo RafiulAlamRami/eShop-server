@@ -1,4 +1,5 @@
-# eShop
+# [eShop](https://eshop-3786e.web.app/)
+## Live URL: https://eshop-3786e.web.app/
 
 eShop is an e-commerce website with powerful search features. This project is built using Node.js, Express.js, and MongoDB for the backend.
 
