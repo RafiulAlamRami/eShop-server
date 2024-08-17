@@ -1,27 +1,49 @@
-Project Setup for eShop
-1. Project Initialization
-Create a new directory for the project:
+# eShop
+
+eShop is an e-commerce website with powerful search features. This project is built using Node.js, Express.js, and MongoDB for the backend.
+
+## Project Setup
+
+### 1. Project Initialization
+
+First, create a new directory for the project and navigate into it:
+
+```bash
 mkdir eShop
 cd eShop
+```
+
 Initialize a Node.js project:
+```bash
 npm init -y
+
+```
+
 2. Install Dependencies
-Express.js: A minimal and flexible Node.js web application framework.
-Mongoose: An ODM (Object Data Modeling) library for MongoDB and Node.js.
-Dotenv: A module to load environment variables from a .env file into process.env.
-Other utilities: Such as body-parser, cors, and nodemon for development.
+Install the required dependencies:
+
+```bash
 npm install express mongoose dotenv body-parser cors
 npm install --save-dev nodemon
 
+```
 
-Clone the repository:
-git clone <your-repo-url>
+3. Clone the Repository
+Clone the repository and install dependencies:
+
+```bash
+git clone <repository-url>
 cd eShop
-Install the dependencies:
 npm install
-Create a .env file:
-Add your MongoDB URI and PORT in the .env file.
 
-Run the server:
-npx nodemon server.js
 
+```
+
+5. Run the Server
+Start the development server using nodemon:
+
+```bash
+npm nodemon server.js
+
+
+```
