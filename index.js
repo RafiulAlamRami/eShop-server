@@ -29,23 +29,6 @@ async function run() {
 
     const productsCollection=client.db('Task_eShop').collection('products')
 
-     // -----jwt related api start-----
-
-    //make admin api
-  app.patch('/users/admin/:id',verifyToken,verifyAdmin, async (req, res) => {
-    const id = req.params.id
-    const filter = { _id:new ObjectId(id) }
-    const updateDoc = {
-      $set: {
-        role: 'admin'
-      }
-    }
-    const result = await userCollection.updateOne(filter, updateDoc)
-    res.send(result)
-  })
-
-
-      // -----------------
 
     app.get('/allProducts',async(req,res)=>{
       const result=await productsCollection.find().toArray()
