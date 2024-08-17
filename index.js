@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5500;
 
 const cors = require("cors");
 const app = express();
@@ -54,6 +54,19 @@ async function run() {
       })
       // next()
     }
+
+    //make admin api
+  app.patch('/users/admin/:id',verifyToken,verifyAdmin, async (req, res) => {
+    const id = req.params.id
+    const filter = { _id:new ObjectId(id) }
+    const updateDoc = {
+      $set: {
+        role: 'admin'
+      }
+    }
+    const result = await userCollection.updateOne(filter, updateDoc)
+    res.send(result)
+  })
 
 
       // -----------------
