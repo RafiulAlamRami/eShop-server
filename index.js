@@ -29,6 +29,17 @@ async function run() {
 
     const productsCollection=client.db('Task_eShop').collection('products')
 
+     // -----jwt related api start-----
+
+      //jwt create
+      app.post('/jwt', async (req, res) => {
+        const user = req.body
+        const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' })
+        res.send({ token })
+      })
+
+      // -----------------
+
     app.get('/allProducts',async(req,res)=>{
       const result=await productsCollection.find().toArray()
       res.send(result)
