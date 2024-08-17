@@ -29,7 +29,10 @@ async function run() {
 
     const productsCollection=client.db('Task_eShop').collection('products')
 
-
+    app.get('/allProducts',async(req,res)=>{
+      const result=await productsCollection.find().toArray()
+      res.send(result)
+    })
 
 
     // Send a ping to confirm a successful connection
