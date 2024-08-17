@@ -38,6 +38,24 @@ async function run() {
         res.send({ token })
       })
 
+      // verify jwt
+    const verifyToken = (req, res, next) => {
+      // console.log("inside verify token : ", req.headers.authorization);
+      if (!req.headers.authorization) {
+        return res.status(401).send({ message: 'unathorized access' })
+      }
+      const token = req.headers.authorization.split(' ')[1]
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+          res.status(401).send({ message: 'unathorized access' })
+        }
+        req.decoded = decoded
+        next()
+      })
+      // next()
+    }
+
+
       // -----------------
 
     app.get('/allProducts',async(req,res)=>{
