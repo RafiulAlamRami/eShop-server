@@ -25,9 +25,9 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
-    const productsCollection=client.db('Task_eShop').collection('products')
+    const productsCollection=client.db('ask_eShop').collection('products')
 
 app.get('/allProducts',async(req,res)=>{
   const result=await productsCollection.find().toArray()
@@ -40,7 +40,7 @@ app.get('/allProducts',async(req,res)=>{
     // console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
