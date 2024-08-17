@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const port = process.env.PORT || 5500;
+const port = process.env.PORT || 5000;
 
 const cors = require("cors");
 const app = express();
@@ -30,30 +30,6 @@ async function run() {
     const productsCollection=client.db('Task_eShop').collection('products')
 
      // -----jwt related api start-----
-
-      //jwt create
-      app.post('/jwt', async (req, res) => {
-        const user = req.body
-        const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' })
-        res.send({ token })
-      })
-
-      // verify jwt
-    const verifyToken = (req, res, next) => {
-      // console.log("inside verify token : ", req.headers.authorization);
-      if (!req.headers.authorization) {
-        return res.status(401).send({ message: 'unathorized access' })
-      }
-      const token = req.headers.authorization.split(' ')[1]
-      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-        if (err) {
-         return res.status(401).send({ message: 'unathorized access' })
-        }
-        req.decoded = decoded
-        next()
-      })
-      // next()
-    }
 
     //make admin api
   app.patch('/users/admin/:id',verifyToken,verifyAdmin, async (req, res) => {
