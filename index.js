@@ -30,10 +30,50 @@ async function run() {
     const productsCollection=client.db('Task_eShop').collection('products')
 
 
-    app.get('/allProducts',async(req,res)=>{
-      const result=await productsCollection.find().toArray()
-      res.send(result)
-    })
+    app.get('/allProducts', async (req, res) => {
+  const { page = 1, limit = 10, search = '', brand, category, minPrice, maxPrice, sortBy } = req.query;
+  const skip = (page - 1) * limit;
+
+  // Build the filter object
+  let filter = {};
+  if (search) {
+    filter.productName = { $regex: search, $options: "i" }; // Case-insensitive search
+  }
+  if (brand) {
+    filter.brand = brand;
+  }
+  if (category) {
+    filter.category = category;
+  }
+  if (minPrice && maxPrice) {
+    filter.price = { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) };
+  }
+
+  // Determine sort criteria
+  let sortCriteria = {};
+  if (sortBy === 'priceLowToHigh') {
+    sortCriteria.price = 1;
+  } else if (sortBy === 'priceHighToLow') {
+    sortCriteria.price = -1;
+  } else if (sortBy === 'newest') {
+    sortCriteria.date = -1;
+  }
+
+  // Fetch products based on filters, sort, and pagination
+  const totalProducts = await productsCollection.countDocuments(filter);
+  const result = await productsCollection.find(filter)
+    .sort(sortCriteria)
+    .skip(skip)
+    .limit(parseInt(limit))
+    .toArray();
+
+  res.send({
+    totalProducts,
+    totalPages: Math.ceil(totalProducts / limit),
+    currentPage: parseInt(page),
+    products: result,
+  });
+});
 
 
     // Send a ping to confirm a successful connection
